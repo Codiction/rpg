@@ -7,6 +7,6 @@ package domein;
 public class Test {
     public static void main(String[] args) {
 	System.out.print("bla");
-        gujgfyhfghfghj
+        System.out.println("Hey fredjes hoe gaat het ermee?");
     }
 }
