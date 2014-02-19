@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Brent
+ * @author A1
  */
 public class ChestMapper {
     

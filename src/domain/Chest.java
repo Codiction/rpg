@@ -3,7 +3,7 @@ package domain;
 
 /**
  *
- * @author Brent
+ * @author A1
  */
 public class Chest {
     

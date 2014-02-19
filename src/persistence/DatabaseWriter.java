@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Brent
+ * @author A1
  */
 public class DatabaseWriter {
 
