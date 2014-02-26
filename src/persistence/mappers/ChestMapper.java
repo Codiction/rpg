@@ -1,48 +1,55 @@
 package persistence.mappers;
 
 import domain.Chest;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author A1
+ * @author Brent
  */
-public class ChestMapper {
-    
-    private PreparedStatement queryGetChests;
-    private PreparedStatement queryWriteChest;
-    private PreparedStatement queryChestExists;
+public class ChestMapper extends Mapper {
 
-    public ChestMapper(Connection c) {
-        try {
-            //TODO: finish
-            queryGetChests = c.prepareStatement("SELECT * FROM schat");
-            queryWriteChest = c.prepareStatement("INSERT INTO schat ");
-            queryChestExists = c.prepareStatement("SELECT * FROM schat WHERE bla = ?");
-            
-        } catch (SQLException bla) {
-            
+    private final PreparedStatement queryAddChest = prepareStatement("");
+    private final PreparedStatement queryDeleteChest = prepareStatement("");
+    private final PreparedStatement queryUpdateChest = prepareStatement("");
+    private final PreparedStatement queryChestExists = prepareStatement("");
+    private final PreparedStatement queryGetChests = prepareStatement("");
+
+    public ChestMapper(String dbLink) {
+        super(dbLink);
+    }
+
+    public void addChest(Chest c) {
+        if (!exists(c)) {
+            try {
+                //TODO: addChest parameters invullen
+                queryAddChest.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println("Failed to add chest (AddChest -> ChestMapper)");
+                //TODO: fix
+            }
         }
     }
 
-    public ArrayList<Chest> loadChests(Connection c) {
-        ArrayList<Chest> list = new ArrayList<>();
-        try {
-            ResultSet rs = queryGetChests.executeQuery();
-            while(rs.next()) {
-                //TODO: finish
-                list.add(new Chest());
-            }
-        } catch (SQLException ex) {
-            
-        }
-        
-        return list;
+    public void deleteChest(Chest c) {
+
+    }
+
+    public boolean exists(Chest c) {
+        return false;
+    }
+
+    public ArrayList<Chest> loadChests() {
+        return null;
+    }
+
+    public void updateChest(Chest original, Chest updated) {
+
+    }
+
+    public void saveChest(Chest c) {
+
     }
 }

@@ -1,10 +1,9 @@
 package persistence;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import domain.Chest;
+import java.util.ArrayList;
+import persistence.mappers.ChestMapper;
+import persistence.mappers.MonsterMapper;
 
 /**
  *
@@ -12,18 +11,25 @@ import java.util.logging.Logger;
  */
 public class PersistenceController {
 
-    private DatabaseReader dbReader;
-    private DatabaseWriter dbWriter;
-    public static final String JDBC_URL = "jdbc:mysql://localhost:3306/rpg?user=rpg?password=rpg";
+    private static PersistenceController INSTANCE = null;
+    private static final String DB_LINK = "jdbc:mysql://localhost:3306/rpg?user=rpg&password=rpg";
+    
+    private ChestMapper chestMapper = new ChestMapper(DB_LINK);
+    private MonsterMapper monsterMapper = new MonsterMapper(DB_LINK);
+    
 
-    public PersistenceController() {
-        try {
-            dbReader = new DatabaseReader();
-            dbWriter = new DatabaseWriter();
-        } catch (SQLException ex) {
-            Logger.getLogger(PersistenceController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    private PersistenceController() {
+        
     }
 
+    public static PersistenceController getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new PersistenceController();
+        }
+        return INSTANCE;
+    }
+    
+    public ArrayList<Chest> loadChests() {
+        return chestMapper.loadChests();
+    }
 }
