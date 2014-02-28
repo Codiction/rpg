@@ -22,7 +22,7 @@ public class ChestMapper extends Mapper{
     public boolean saveChest(Chest chest){
          throw new UnsupportedOperationException();
     }
-    public boolean updateChest(Chest original, Chest updated){
+    public boolean updateChest(Chest chest){
          throw new UnsupportedOperationException();
     }
     public boolean deleteChest(Chest chest){

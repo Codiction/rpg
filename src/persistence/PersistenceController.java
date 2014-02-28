@@ -28,56 +28,47 @@ public class PersistenceController {
     }
 
     public ArrayList<Chest> loadChests() {
-
-	throw new UnsupportedOperationException();
+	return chestMapper.loadChests();
     }
 
     public ArrayList<Monster> loadMonsters() {
-
-	throw new UnsupportedOperationException();
+	return monsterMapper.loadMonster();
     }
 
     public boolean saveChest(Chest chest) {
-
-	throw new UnsupportedOperationException();
+	return chestMapper.saveChest(chest);
     }
 
     public boolean saveMonster(Monster monster) {
-
-	throw new UnsupportedOperationException();
+	return monsterMapper.saveMonster(monster);
     }
 
     public boolean updateChest(Chest chest) {
-
-	throw new UnsupportedOperationException();
+	return chestMapper.updateChest(chest);
     }
 
     public boolean updateMonster(Monster monster) {
-
-	throw new UnsupportedOperationException();
-
+	return monsterMapper.updateMonster(monster);
     }
 
     public boolean deleteChest(Chest chest) {
-
-	throw new UnsupportedOperationException();
+	return chestMapper.deleteChest(chest);
     }
 
     public boolean deleteMonster(Monster monster) {
-
-	throw new UnsupportedOperationException();
+	return monsterMapper.deleteMonster(monster);
     }
 
     public boolean exists(Monster monster) {
-
-	throw new UnsupportedOperationException();
+	return monsterMapper.exists(monster);
     }
 
     public boolean exists(Chest chest) {
-	throw new UnsupportedOperationException();
+	return chestMapper.exists(chest);
     }
 
     public boolean link(Monster monster, Chest chest) {
-	throw new UnsupportedOperationException();
+	monster.getGuardedChests().add(chest);
+	return monsterMapper.updateMonster(monster);
     }
 }

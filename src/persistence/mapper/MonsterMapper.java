@@ -21,7 +21,7 @@ public class MonsterMapper extends Mapper {
         throw new UnsupportedOperationException();
     }
 
-    public boolean updateMonster(Monster original, Monster updated) {
+    public boolean updateMonster(Monster monster) {
         throw new UnsupportedOperationException();
     }
 
