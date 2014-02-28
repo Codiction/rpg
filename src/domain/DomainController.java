@@ -8,7 +8,9 @@ import java.awt.image.BufferedImage;
  * @author A1
  */
 public class DomainController {
-    
+     
+    private MonsterRepository monsterRepository;
+    private ChestRepository chestRepository;
     
     public BufferedImage[] getMonsters(){
         

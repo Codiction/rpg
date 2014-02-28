@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package domain;
 
 import java.util.ArrayList;
@@ -12,44 +13,38 @@ import persistence.PersistenceController;
  *
  * @author Jens
  */
-public class MonsterRepository {
+public class ChestRepository {
     
-    private Monster monster;
+    private Chest chest;
     private PersistenceController persistenceController;
 
-    public MonsterRepository() {
-    }
-    
-    
-
-    public ArrayList<Monster> getMonster() {
-
-        throw new UnsupportedOperationException();
+    public ChestRepository() {
     }
 
-    public boolean linkMonster(Monster monster, Chest chest) {
-
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean saveMonster(Monster monster) {
-
-        throw new UnsupportedOperationException();
-    }
-    
-    public boolean deleteMonster(Monster monster){
+    public ArrayList<Chest> getChest(){
         
         throw new UnsupportedOperationException();
     }
     
-    public boolean updateMonster(Monster monster){
+    public boolean linkChestToMonster(Chest chest, Monster monster){
+        
+        throw new UnsupportedOperationException();
+    }
+    public boolean saveChest(Chest chest){
         
         throw new UnsupportedOperationException();
     }
     
-    public boolean monsterExists(Monster moster){
+    public boolean deleteChest(Chest chest){
         
         throw new UnsupportedOperationException();
     }
-
+    public boolean updateChest(Chest chest){
+        
+        throw new UnsupportedOperationException();
+    }
+    public boolean chestExists(Chest chest){
+        
+        throw new UnsupportedOperationException();
+    }
 }
