@@ -5,6 +5,6 @@ package domain;
  *
  * @author A1
  */
-public class Monster extends Entity {
+public class Monster {
     
 }
