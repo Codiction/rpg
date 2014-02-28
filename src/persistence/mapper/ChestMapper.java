@@ -13,15 +13,17 @@ public class ChestMapper extends Mapper{
         super(dbLink);
     }
     public ArrayList<Chest> loadChests(){
-         throw new UnsupportedOperationException();
-         
+         ArrayList<Chest> chests = new ArrayList<>();
+	 
+	 
+	 
+	 return chests;
     }
     public boolean saveChest(Chest chest){
          throw new UnsupportedOperationException();
     }
     public boolean updateChest(Chest original, Chest updated){
          throw new UnsupportedOperationException();
-         
     }
     public boolean deleteChest(Chest chest){
          throw new UnsupportedOperationException();

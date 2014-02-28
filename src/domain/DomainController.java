@@ -17,11 +17,11 @@ public class DomainController {
         throw new UnsupportedOperationException();
     }
     
-    public int [][] getChests(){
+    public int[][] getChests(){
         
         throw new UnsupportedOperationException();
     }
-    public int [][] getEffects(int id){
+    public int[][] getEffects(int id){
         
         throw new UnsupportedOperationException();
     }

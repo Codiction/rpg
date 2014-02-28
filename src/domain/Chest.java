@@ -1,6 +1,6 @@
-
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,13 +9,46 @@ import java.util.List;
  */
 public class Chest {
     
-    private Monster monster;
+    private ArrayList<Monster> monsters;
+    private int treasureId;
+    private int goldAmount;
+    
     
     public Chest(){
-        
+	setMonsters(new ArrayList<Monster>());
     }
     
-    public List<Monster> getGurardedMonsters(){
+    public Chest(int treasureId, int goldAmount, ArrayList<Monster> monsters){
+	setTreasureId(treasureId);
+	setGoldAmount(goldAmount);
+	setMonsters(monsters);
+    }
+    
+    private void setMonsters(ArrayList<Monster> monsters){
+	this.monsters = monsters;
+    }
+
+    public ArrayList<Monster> getMonsters() {
+	return monsters;
+    }
+
+    public int getTreasureId() {
+	return treasureId;
+    }
+
+    public void setTreasureId(int treasureId) {
+	this.treasureId = treasureId;
+    }
+
+    public int getGoldAmount() {
+	return goldAmount;
+    }
+
+    public void setGoldAmount(int goldAmount) {
+	this.goldAmount = goldAmount;
+    }
+    
+    public List<Monster> getGuardingMonsters(){
         
         throw new UnsupportedOperationException();
     }
