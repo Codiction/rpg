@@ -71,15 +71,15 @@ public class ChestMapper extends Mapper {
 		insertChest.setInt(1, chest.getGoldAmount());
 		int id = insertChest.executeUpdate();
 		linkChestToMonster.setInt(2, id);
-		for(Monster m : chest.getGuardingMonsters()){
+		for (Monster m : chest.getGuardingMonsters()) {
 		    linkChestToMonster.setInt(1, m.getMonsterId());
 		    linkChestToMonster.executeUpdate();
 		}
-		
+
 		return true;
 	    } catch (SQLException ex) {
 		return false;
-	    }finally{
+	    } finally {
 		super.closeConnection();
 	    }
 	}
@@ -94,6 +94,27 @@ public class ChestMapper extends Mapper {
 	    // Update Chest in treasure-table (UPDATE-statement)
 	    // Delete all rows with corresponding id in guardedchest and insert
 	    // monsters with corresponding id in guardedchest
+
+	    String queryInsertTreasure = "UPDATE treasure SET goldAmount = ? WHERE treasureId = ?; DELETE FROM guardedchest WHERE idTreasure = ?;";
+	    String queryLinkChestToMonster = "INSERT INTO guardedchest(?, ?)";
+	    PreparedStatement update = super.prepareStatement(queryInsertTreasure);
+	    try {
+		update.setInt(1, chest.getGoldAmount());
+		update.setInt(2, chest.getTreasureId());
+		update.setInt(3, chest.getTreasureId());
+		update.executeUpdate();
+
+		PreparedStatement insert = super.prepareStatement(queryLinkChestToMonster);
+		for (Monster m : chest.getGuardingMonsters()) {
+		    insert.setInt(1, m.getMonsterId());
+		    insert.setInt(2, chest.getTreasureId());
+		    insert.executeUpdate();
+		}
+
+		return true;
+	    } catch (SQLException ex) {
+		return false;
+	    }
 	}
 
 	return false;
@@ -103,17 +124,17 @@ public class ChestMapper extends Mapper {
 	super.openConnection();
 	if (exists(chest)) {
 	    String queryDeleteChest = "DELETE FROM treasure WHERE treasureId = ?; DELETE FROM guardedchest WHERE idTreasure = ?;";
-	    try{
+	    try {
 		PreparedStatement statement = super.prepareStatement(queryDeleteChest);
 		statement.executeUpdate();
 		return true;
-	    }catch(SQLException ex){
+	    } catch (SQLException ex) {
 		return false;
-	    }finally{
+	    } finally {
 		super.closeConnection();
 	    }
 	}
-	
+
 	return false;
     }
 
@@ -156,9 +177,9 @@ public class ChestMapper extends Mapper {
 		while (monsterResult.next()) {
 		    monsterList.add(monsterMapper.loadMonster(monsterResult.getInt("idMonster")));
 		}
-		
+
 		return new Chest(id, goldAmount, monsterList);
-		
+
 	    } else {
 		return null;
 	    }
