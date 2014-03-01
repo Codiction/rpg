@@ -12,12 +12,12 @@ import java.util.ArrayList;
  * @author Jens
  */
 public class ChestMapper extends Mapper {
-    
+
     MonsterMapper monsterMapper;
 
     /**
-     * 
-     * @param dbLink 
+     *
+     * @param dbLink
      */
     public ChestMapper(String dbLink) {
 	super(dbLink);
@@ -35,13 +35,17 @@ public class ChestMapper extends Mapper {
 	    while (chestResult.next()) {
 		int id = chestResult.getInt("treasureId");
 		int goldAmount = chestResult.getInt("goldAmount");
+
 		PreparedStatement monsters = super.prepareStatement(queryGetMonstersLinkedToTreasure);
 		monsters.setInt(1, id);
+
 		ArrayList<Monster> monsterList = new ArrayList<>();
 		ResultSet monsterResult = monsters.executeQuery();
-		while(monsterResult.next()){
+
+		while (monsterResult.next()) {
 		    monsterList.add(monsterMapper.loadMonster(monsterResult.getInt("idMonster")));
 		}
+
 		chests.add(new Chest(id, goldAmount, monsterList));
 	    }
 	} catch (SQLException ex) {
@@ -54,43 +58,92 @@ public class ChestMapper extends Mapper {
     }
 
     public boolean saveChest(Chest chest) {
-	if(exists(chest)){
+	if (exists(chest)) {
 	    this.updateChest(chest);
-	}else{
+	} else {
 	    // TODO: Add code for INSERT-statement (don't forget guardedchest)
 	}
-	
+
 	throw new UnsupportedOperationException();
     }
 
     public boolean updateChest(Chest chest) {
-	if(!exists(chest)){
+	if (!exists(chest)) {
 	    this.saveChest(chest);
-	}else{
+	} else {
 	    // TODO: Add code for UPDATE-statement (don't forget guardedchest)
 	}
-	
+
 	throw new UnsupportedOperationException();
     }
 
     public boolean deleteChest(Chest chest) {
-	if(!exists(chest)){
-	    // TODO: Add code for DELETE-statement (don't forget guardedchest)
+	super.openConnection();
+	if (exists(chest)) {
+	    String queryDeleteChest = "DELETE FROM treasure WHERE treasureId = ?; DELETE FROM guardedchest WHERE idTreasure = ?;";
+	    try{
+		PreparedStatement statement = super.prepareStatement(queryDeleteChest);
+		statement.executeUpdate();
+		return true;
+	    }catch(SQLException ex){
+		return false;
+	    }finally{
+		super.closeConnection();
+	    }
 	}
 	
-	throw new UnsupportedOperationException();
+	return false;
     }
 
     public boolean exists(Chest chest) {
-	// TODO: Add code for SELECT-statement based on id of Chest-class
-	// and check if this result is empty
-	
-	throw new UnsupportedOperationException();
+	String queryGetChest = "SELECT * FROM treasure WHERE treasureId = ?";
+	PreparedStatement statement = super.prepareStatement(queryGetChest);
+	try {
+	    statement.setInt(1, chest.getTreasureId());
+	    return statement.executeQuery().next();
+	} catch (SQLException ex) {
+	    ex.printStackTrace();
+	}
+	// Does not open or close connection! Because exists() is most of the
+	// time called in another method of the Mapper-class, this means that it
+	// would open a connection while it has already been opened by the
+	// caller, it can also not be closed because then the caller-method
+	// will throw an error because the connection has been closed.
+	return false;
     }
 
-    public Chest loadChest(int id){
-	// TODO: Add code for SELECT-statement based on id
-	
-	throw new UnsupportedOperationException();
+    public Chest loadChest(int id) throws SQLException {
+	String queryGetChest = "SELECT goldAmount FROM treasure WHERE treasureId = ?";
+	String queryGetMonstersLinkedToTreasure = "SELECT idMonster FROM guardedchest WHERE idTreasure = ?";
+
+	super.openConnection();
+	PreparedStatement getChest = super.prepareStatement(queryGetChest);
+
+	try {
+	    getChest.setInt(1, id);
+	    ResultSet chest = getChest.executeQuery();
+	    if (chest.next()) {
+		int goldAmount = chest.getInt("goldAmount");
+
+		PreparedStatement monsters = super.prepareStatement(queryGetMonstersLinkedToTreasure);
+		monsters.setInt(1, id);
+
+		ArrayList<Monster> monsterList = new ArrayList<>();
+		ResultSet monsterResult = monsters.executeQuery();
+
+		while (monsterResult.next()) {
+		    monsterList.add(monsterMapper.loadMonster(monsterResult.getInt("idMonster")));
+		}
+		
+		return new Chest(id, goldAmount, monsterList);
+		
+	    } else {
+		return null;
+	    }
+	} catch (SQLException ex) {
+	    ex.printStackTrace();
+	}
+
+	return null;
     }
 }

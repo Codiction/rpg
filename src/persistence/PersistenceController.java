@@ -64,11 +64,17 @@ public class PersistenceController {
     }
 
     public boolean exists(Monster monster) {
-	return monsterMapper.exists(monster);
+	monsterMapper.openConnection();
+	boolean exists = monsterMapper.exists(monster);
+	monsterMapper.closeConnection();
+	return exists;
     }
 
     public boolean exists(Chest chest) {
-	return chestMapper.exists(chest);
+	chestMapper.openConnection();
+	boolean exists = chestMapper.exists(chest);
+	chestMapper.closeConnection();
+	return exists;
     }
 
     public boolean link(Monster monster, Chest chest) {
