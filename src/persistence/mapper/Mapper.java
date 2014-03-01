@@ -45,13 +45,12 @@ public class Mapper {
         }
     }
 
-    public PreparedStatement preparedStatement(String sql) {
+    public PreparedStatement prepareStatement(String sql) {
         if (isConnected()) {
             try {
                 return connection.prepareStatement(sql);
             } catch (SQLException se) {
                 se.printStackTrace();
-
             }
         }
         return null;

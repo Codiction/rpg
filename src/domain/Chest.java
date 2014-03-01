@@ -49,7 +49,6 @@ public class Chest {
     }
     
     public List<Monster> getGuardingMonsters(){
-        
-        throw new UnsupportedOperationException();
+        return monsters;
     }
 }

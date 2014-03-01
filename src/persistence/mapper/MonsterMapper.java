@@ -8,9 +8,12 @@ import java.util.ArrayList;
  * @author Jens
  */
 public class MonsterMapper extends Mapper {
+    
+    ChestMapper chestMapper;
 
     public MonsterMapper(String dbLink) {
         super(dbLink);
+	chestMapper = new ChestMapper(dbLink);
     }
 
     public ArrayList<Monster> loadMonster() {
@@ -31,5 +34,9 @@ public class MonsterMapper extends Mapper {
 
     public boolean exists(Monster monster) {
         throw new UnsupportedOperationException();
+    }
+    
+    public Monster loadMonster(int id){
+	throw new UnsupportedOperationException();
     }
 }
