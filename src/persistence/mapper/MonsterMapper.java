@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jens
+ * @author A1
  */
 public class MonsterMapper extends Mapper {
     

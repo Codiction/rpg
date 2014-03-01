@@ -5,7 +5,7 @@ import persistence.PersistenceController;
 
 /**
  *
- * @author Brent
+ * @author A1
  */
 public class Main {
 

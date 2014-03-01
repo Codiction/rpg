@@ -8,7 +8,7 @@ import persistence.mapper.MonsterMapper;
 
 /**
  *
- * @author Jens
+ * @author A1
  */
 public class PersistenceController {
 

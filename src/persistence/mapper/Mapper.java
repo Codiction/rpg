@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Jens
+ * @author A1
  */
 public class Mapper {
 
