@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,10 +51,21 @@ public class Mapper {
             try {
                 return connection.prepareStatement(sql);
             } catch (SQLException se) {
-                se.printStackTrace();
+                return null;
             }
         }
         return null;
+    }
+    
+    public PreparedStatement prepareStatement(String sql, int mode){
+	if(isConnected()){
+	    try{
+		return connection.prepareStatement(sql, mode);
+	    }catch(SQLException se){
+		return null;
+	    }
+	}
+	return null;
     }
 
     public boolean isConnected() {

@@ -1,7 +1,7 @@
 
 package domain;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -9,12 +9,21 @@ import java.util.List;
  */
 public class Monster {
     
-    private Chest chest;
+    private ArrayList<Chest> chest;
+    private int monsterId;
+
+    public int getMonsterId() {
+	return this.monsterId;
+    }
+
+    public void setMonsterId(int id) {
+	this.monsterId = id;
+    }
 
     public Monster() {
     }
     
-    public List<Chest> getGuardedChests(){
+    public ArrayList<Chest> getGuardedChests(){
         
         throw new UnsupportedOperationException();
     }

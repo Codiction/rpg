@@ -5,6 +5,7 @@ import domain.Monster;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -61,20 +62,41 @@ public class ChestMapper extends Mapper {
 	if (exists(chest)) {
 	    this.updateChest(chest);
 	} else {
-	    // TODO: Add code for INSERT-statement (don't forget guardedchest)
+	    super.openConnection();
+	    String queryInsertChest = "INSERT INTO treasure (null, ?)";
+	    String queryLinkChestToMonster = "INSERT INTO guardedchest (?, ?)";
+	    PreparedStatement insertChest = prepareStatement(queryInsertChest, Statement.RETURN_GENERATED_KEYS);
+	    PreparedStatement linkChestToMonster = super.prepareStatement(queryLinkChestToMonster);
+	    try {
+		insertChest.setInt(1, chest.getGoldAmount());
+		int id = insertChest.executeUpdate();
+		linkChestToMonster.setInt(2, id);
+		for(Monster m : chest.getGuardingMonsters()){
+		    linkChestToMonster.setInt(1, m.getMonsterId());
+		    linkChestToMonster.executeUpdate();
+		}
+		
+		return true;
+	    } catch (SQLException ex) {
+		return false;
+	    }finally{
+		super.closeConnection();
+	    }
 	}
 
-	throw new UnsupportedOperationException();
+	return false;
     }
 
     public boolean updateChest(Chest chest) {
 	if (!exists(chest)) {
 	    this.saveChest(chest);
 	} else {
-	    // TODO: Add code for UPDATE-statement (don't forget guardedchest)
+	    // Update Chest in treasure-table (UPDATE-statement)
+	    // Delete all rows with corresponding id in guardedchest and insert
+	    // monsters with corresponding id in guardedchest
 	}
 
-	throw new UnsupportedOperationException();
+	return false;
     }
 
     public boolean deleteChest(Chest chest) {
