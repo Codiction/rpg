@@ -50,7 +50,7 @@ public class Mapper {
             try {
                 return connection.prepareStatement(sql);
             } catch (SQLException se) {
-                return null;
+                se.printStackTrace();
             }
         }
         return null;

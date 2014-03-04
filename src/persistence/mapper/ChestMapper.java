@@ -64,11 +64,11 @@ public class ChestMapper extends Mapper {
     }
 
     public boolean saveChest(Chest chest) {
+	super.openConnection();
 	if (exists(chest)) {
 	    this.updateChest(chest);
 	} else {
-	    super.openConnection();
-	    String queryInsertChest = "INSERT INTO treasure (null, ?)";
+	    String queryInsertChest = "INSERT INTO treasure (goldAmount) VALUES (?)";
 	    String queryLinkChestToMonster = "INSERT INTO guardedchest (?, ?)";
 	    PreparedStatement insertChest = prepareStatement(queryInsertChest, Statement.RETURN_GENERATED_KEYS);
 	    PreparedStatement linkChestToMonster = super.prepareStatement(queryLinkChestToMonster);
@@ -83,7 +83,7 @@ public class ChestMapper extends Mapper {
 
 		return true;
 	    } catch (SQLException ex) {
-		return false;
+		ex.printStackTrace();
 	    } finally {
 		super.closeConnection();
 	    }
@@ -172,18 +172,8 @@ public class ChestMapper extends Mapper {
 	    ResultSet chest = getChest.executeQuery();
 	    if (chest.next()) {
 		int goldAmount = chest.getInt("goldAmount");
-
-		PreparedStatement monsters = super.prepareStatement(queryGetMonstersLinkedToTreasure);
-		monsters.setInt(1, id);
-
-		ArrayList<Monster> monsterList = new ArrayList<>();
-		ResultSet monsterResult = monsters.executeQuery();
-
-		while (monsterResult.next()) {
-		    monsterList.add(monsterMapper.loadMonster(monsterResult.getInt("monsterId")));
-		}
-
-		return new Chest(id, goldAmount, monsterList);
+		
+		return new Chest(id, goldAmount, null);
 
 	    } else {
 		return null;
