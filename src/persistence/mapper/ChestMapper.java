@@ -100,7 +100,7 @@ public class ChestMapper extends Mapper {
 	    // Delete all rows with corresponding id in guardedchest and insert
 	    // monsters with corresponding id in guardedchest
 
-	    String queryInsertTreasure = "UPDATE treasure SET goldAmount = ? WHERE treasureId = ?; DELETE FROM guardedchest WHERE idTreasure = ?;";
+	    String queryInsertTreasure = "UPDATE treasure SET goldAmount = ? WHERE treasureId = ?; DELETE FROM guardedchest WHERE treasureId = ?;";
 	    String queryLinkChestToMonster = "INSERT INTO guardedchest(?, ?)";
 	    PreparedStatement update = super.prepareStatement(queryInsertTreasure);
 	    try {
@@ -128,7 +128,7 @@ public class ChestMapper extends Mapper {
     public boolean deleteChest(Chest chest) {
 	super.openConnection();
 	if (exists(chest)) {
-	    String queryDeleteChest = "DELETE FROM treasure WHERE treasureId = ?; DELETE FROM guardedchest WHERE idTreasure = ?;";
+	    String queryDeleteChest = "DELETE FROM treasure WHERE treasureId = ?; DELETE FROM guardedchest WHERE treasureId = ?;";
 	    try {
 		PreparedStatement statement = super.prepareStatement(queryDeleteChest);
 		statement.executeUpdate();
@@ -162,7 +162,7 @@ public class ChestMapper extends Mapper {
 
     public Chest loadChest(int id) throws SQLException {
 	String queryGetChest = "SELECT goldAmount FROM treasure WHERE treasureId = ?";
-	String queryGetMonstersLinkedToTreasure = "SELECT idMonster FROM guardedchest WHERE idTreasure = ?";
+	String queryGetMonstersLinkedToTreasure = "SELECT monsterId FROM guardedchest WHERE treasureId = ?";
 
 	super.openConnection();
 	PreparedStatement getChest = super.prepareStatement(queryGetChest);
@@ -180,7 +180,7 @@ public class ChestMapper extends Mapper {
 		ResultSet monsterResult = monsters.executeQuery();
 
 		while (monsterResult.next()) {
-		    monsterList.add(monsterMapper.loadMonster(monsterResult.getInt("idMonster")));
+		    monsterList.add(monsterMapper.loadMonster(monsterResult.getInt("monsterId")));
 		}
 
 		return new Chest(id, goldAmount, monsterList);

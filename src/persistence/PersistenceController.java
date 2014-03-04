@@ -15,7 +15,7 @@ public class PersistenceController {
     private ChestMapper chestMapper;
     private MonsterMapper monsterMapper;
     private static PersistenceController INSTANCE;
-    public static final String DB_LINK = "jdbc:mysql://7.26.229.182:3306/projecten1_rpg?user=rpg&password=rpg";
+    public static final String DB_LINK = "jdbc:mysql://bitcode.io:3306/projecten1_rpg?user=rpg&password=rpg";
 
     private PersistenceController() {
 	// TODO: Get DB_LINK from config-file, so the database connection can be changed
