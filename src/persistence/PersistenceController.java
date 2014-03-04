@@ -36,7 +36,7 @@ public class PersistenceController {
     }
 
     public ArrayList<Monster> loadMonsters() {
-	return monsterMapper.loadMonster();
+	return monsterMapper.loadMonsters();
     }
 
     public boolean saveChest(Chest chest) {
