@@ -28,7 +28,7 @@ public class Mapper {
                     connection = DriverManager.getConnection(dbLink);
                     connected = true;
                 } catch (SQLException ex) {
-                    Logger.getLogger(Mapper.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                     connected = false;
                 }
             }

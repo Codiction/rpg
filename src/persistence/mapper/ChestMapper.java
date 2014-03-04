@@ -22,17 +22,21 @@ public class ChestMapper extends Mapper {
      */
     public ChestMapper(String dbLink) {
 	super(dbLink);
-	monsterMapper = new MonsterMapper(dbLink);
+    }
+
+    public void setMonsterMapper(MonsterMapper mapper) {
+	this.monsterMapper = mapper;
     }
 
     public ArrayList<Chest> loadChests() {
 	String queryGetTreasures = "SELECT * FROM treasure";
-	String queryGetMonstersLinkedToTreasure = "SELECT idMonster FROM guardedchest WHERE idTreasure = ?";
+	String queryGetMonstersLinkedToTreasure = "SELECT monsterId FROM guardedchest WHERE treasureId = ?";
 
 	ArrayList<Chest> chests = new ArrayList<>();
 	super.openConnection();
 	try {
-	    ResultSet chestResult = super.prepareStatement(queryGetTreasures).executeQuery();
+	    PreparedStatement chestPs = super.prepareStatement(queryGetTreasures);
+	    ResultSet chestResult = chestPs.executeQuery();
 	    while (chestResult.next()) {
 		int id = chestResult.getInt("treasureId");
 		int goldAmount = chestResult.getInt("goldAmount");
@@ -44,12 +48,13 @@ public class ChestMapper extends Mapper {
 		ResultSet monsterResult = monsters.executeQuery();
 
 		while (monsterResult.next()) {
-		    monsterList.add(monsterMapper.loadMonster(monsterResult.getInt("idMonster")));
+		    monsterList.add(monsterMapper.loadMonster(monsterResult.getInt("monsterId")));
 		}
 
 		chests.add(new Chest(id, goldAmount, monsterList));
 	    }
 	} catch (SQLException ex) {
+	    ex.printStackTrace();
 	    return null;
 	} finally {
 	    super.closeConnection();
