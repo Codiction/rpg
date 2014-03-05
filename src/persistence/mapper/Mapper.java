@@ -20,7 +20,7 @@ public class Mapper {
     public Mapper(String dbLink) {
         this.dbLink = dbLink;
     }
-
+    
     public void openConnection() {
         if (!dbLink.isEmpty()) {
             if (!connected) {
@@ -39,6 +39,7 @@ public class Mapper {
         if (isConnected()) {
             try {
                 connection.close();
+		connected = false;
             } catch (SQLException ex) {
                 Logger.getLogger(Mapper.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -128,13 +128,14 @@ public class ChestMapper extends Mapper {
     public boolean deleteChest(Chest chest) {
 	super.openConnection();
 	if (exists(chest)) {
-	    String queryDeleteChest = "DELETE FROM treasure WHERE treasureId = ?; DELETE FROM guardedchest WHERE treasureId = ?;";
+	    String queryDeleteChest = "DELETE FROM treasure WHERE treasureId = ?";
 	    try {
 		PreparedStatement statement = super.prepareStatement(queryDeleteChest);
+		statement.setInt(1, chest.getTreasureId());
 		statement.executeUpdate();
 		return true;
 	    } catch (SQLException ex) {
-		return false;
+		ex.printStackTrace();
 	    } finally {
 		super.closeConnection();
 	    }

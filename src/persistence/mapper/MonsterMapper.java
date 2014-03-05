@@ -20,7 +20,7 @@ public class MonsterMapper extends Mapper {
     private final String qryGetGuardedChestByMonster = "SELECT * FROM guardedchest WHERE monsterId = ?";
     private final String qryGetMonster = "SELECT * FROM monster where monsterId = ?";
 
-    private final String qryDeleteMonster = "DELETE FROM monster WHERE monsterId = ?; DELETE FROM guardedchest WHERE monsterId = ?;";
+    private final String qryDeleteMonster = "DELETE FROM monster WHERE monsterId = ?;DELETE FROM guardedchest WHERE monsterId = ?;";
 
     public MonsterMapper(String dbLink) {
 	super(dbLink);
@@ -83,7 +83,7 @@ public class MonsterMapper extends Mapper {
 		ps.executeUpdate();
 		return true;
 	    } catch (SQLException ex) {
-		return false;
+		ex.printStackTrace();
 	    } finally {
 		closeConnection();
 	    }
@@ -101,7 +101,7 @@ public class MonsterMapper extends Mapper {
 		return true;
 	    }
 	} catch (SQLException se) {
-
+	    se.printStackTrace();
 	}
 
 	return false;
