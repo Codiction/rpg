@@ -1,5 +1,5 @@
 
-import domain.Chest;
+import domain.Monster;
 import java.util.ArrayList;
 import persistence.PersistenceController;
 
@@ -14,10 +14,10 @@ public class Main {
     }
 
     public Main() {
-	ArrayList<Chest> chests = PersistenceController.getInstance().loadChests();
-	for(Chest c : chests){
-	    if(c.getGoldAmount() == 1995){
-		PersistenceController.getInstance().deleteChest(c);
+	ArrayList<Monster> monsters = PersistenceController.getInstance().loadMonsters();
+	for(Monster m : monsters){
+	    if(m.getName().equals("Baas")){
+		PersistenceController.getInstance().deleteMonster(m);
 	    }
 	}
 	// TODO: Allow Chest and Monster constructor without the id-parameter (do not forget to automatically asign a primary key at saveMonster and saveChest!)
