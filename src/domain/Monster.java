@@ -11,7 +11,7 @@ public class Monster {
 
     private ArrayList<Chest> guardedChests;
     private String name;
-    private float power, defence, speed;
+    private int power, defence, speed;
     private int awareness;
     private String avatarDir;
     private int monsterId;
@@ -19,7 +19,7 @@ public class Monster {
     public Monster() {
     }
 
-    public Monster(int monsterId, String name, float pow, float def, float sp, int awaren, String avDir, ArrayList<Chest> guardedChests) {
+    public Monster(int monsterId, String name, int pow, int def, int sp, int awaren, String avDir, ArrayList<Chest> guardedChests) {
 	setName(name);
 	setPower(pow);
 	setDefence(def);
@@ -30,7 +30,7 @@ public class Monster {
 	setGuardedChests(guardedChests);
     }
 
-    public Monster(String name, float pow, float def, float sp, int awaren, String avDir, ArrayList<Chest> guardedChests) {
+    public Monster(String name, int pow, int def, int sp, int awaren, String avDir, ArrayList<Chest> guardedChests) {
 	setName(name);
 	setPower(pow);
 	setDefence(def);
@@ -44,7 +44,7 @@ public class Monster {
 	guardedChests = chests;
     }
 
-    public List<Chest> getGuardedChests() {
+    public ArrayList<Chest> getGuardedChests() {
 	return guardedChests;
     }
 
@@ -64,27 +64,27 @@ public class Monster {
 	this.name = name;
     }
 
-    public float getPower() {
+    public int getPower() {
 	return power;
     }
 
-    public void setPower(float power) {
+    public void setPower(int power) {
 	this.power = power;
     }
 
-    public float getDefence() {
+    public int getDefence() {
 	return defence;
     }
 
-    public void setDefence(float defence) {
+    public void setDefence(int defence) {
 	this.defence = defence;
     }
 
-    public float getSpeed() {
+    public int getSpeed() {
 	return speed;
     }
 
-    public void setSpeed(float speed) {
+    public void setSpeed(int speed) {
 	this.speed = speed;
     }
 

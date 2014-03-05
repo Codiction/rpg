@@ -105,10 +105,10 @@ public class ChestMapper extends Mapper {
 	    // Delete all rows with corresponding id in guardedchest and insert
 	    // monsters with corresponding id in guardedchest
 
-	    String queryInsertTreasure = "UPDATE treasure SET goldAmount = ? WHERE treasureId = ?;";
+	    String queryUpdateTreasure = "UPDATE treasure SET goldAmount = ? WHERE treasureId = ?;";
 	    String queryDeleteGuardedTreasure = "DELETE FROM guardedchest WHERE treasureId = ?;";
 	    String queryLinkChestToMonster = "INSERT INTO guardedchest(?, ?)";
-	    PreparedStatement update = super.prepareStatement(queryInsertTreasure);
+	    PreparedStatement update = super.prepareStatement(queryUpdateTreasure);
 	    PreparedStatement delete = super.prepareStatement(queryDeleteGuardedTreasure);
 	    try {
 		update.setInt(1, chest.getGoldAmount());

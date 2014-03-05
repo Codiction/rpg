@@ -1,6 +1,5 @@
 
 import domain.Chest;
-import domain.Monster;
 import persistence.PersistenceController;
 
 /**
