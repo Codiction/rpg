@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import persistence.PersistenceController;
 
 /**
  *
@@ -52,7 +51,7 @@ public class MonsterMapper extends Mapper {
 		}
 
 		Monster m = new Monster(rs.getInt("monsterId"), rs.getString("name"), rs.getFloat("power"),
-			rs.getFloat("defence"), rs.getFloat("speed"), rs.getInt("awareness"), rs.getString("avatarDir"));
+			rs.getFloat("defence"), rs.getFloat("speed"), rs.getInt("awareness"), rs.getString("avatarDir"), null);
 		m.setGuardedChests(guardedChests);
 
 		loadedMonsters.add(m);
@@ -110,17 +109,15 @@ public class MonsterMapper extends Mapper {
 	try {
 	    openConnection();
 	    PreparedStatement ps = prepareStatement(qryGetMonster);
-	    PreparedStatement ps2 = prepareStatement(qryGetGuardedChestByMonster);
 	    ps.setInt(1, id);
-	    ps2.setInt(1, id);
 
 	    ResultSet rs = ps.executeQuery();
-	    ResultSet rsChests = ps2.executeQuery();
 
 	    Monster m = null;
 	    if (rs.next()) {
 		m = new Monster(rs.getInt("monsterId"), rs.getString("name"), rs.getFloat("power"),
-			rs.getFloat("defence"), rs.getFloat("speed"), rs.getInt("awareness"), rs.getString("avatarDir"));
+			rs.getFloat("defence"), rs.getFloat("speed"), rs.getInt("awareness"), rs.getString("avatarDir"), null);
+		
 	    }
 	    return m;
 	} catch (SQLException ex) {

@@ -8,23 +8,30 @@ import java.util.List;
  * @author A1
  */
 public class Chest {
-    
+
     private ArrayList<Monster> monsters;
     private int treasureId;
     private int goldAmount;
-    
-    
-    public Chest(){
+
+    public Chest() {
 	setMonsters(new ArrayList<Monster>());
     }
-    
-    public Chest(int treasureId, int goldAmount, ArrayList<Monster> monsters){
+
+    public Chest(int treasureId, int goldAmount, ArrayList<Monster> monsters) {
 	setTreasureId(treasureId);
 	setGoldAmount(goldAmount);
 	setMonsters(monsters);
     }
     
-    private void setMonsters(ArrayList<Monster> monsters){
+    public Chest(int goldAmount){
+	this(goldAmount, new ArrayList<Monster>());
+    }
+
+    public Chest(int goldAmount, ArrayList<Monster> monsters) {
+	this(0, goldAmount, monsters);
+    }
+
+    private void setMonsters(ArrayList<Monster> monsters) {
 	this.monsters = monsters;
     }
 
@@ -47,8 +54,8 @@ public class Chest {
     public void setGoldAmount(int goldAmount) {
 	this.goldAmount = goldAmount;
     }
-    
-    public List<Monster> getGuardingMonsters(){
-        return monsters;
+
+    public List<Monster> getGuardingMonsters() {
+	return monsters;
     }
 }

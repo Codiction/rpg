@@ -19,78 +19,89 @@ public class Monster {
     public Monster() {
     }
 
-    public Monster(int monsterId, String name, float pow, float def, float sp, int awaren, String avDir) {
-        setName(name);
-        setPower(pow);
-        setDefence(def);
-        setSpeed(sp);
-        setAwareness(awaren);
-        setAvatarDir(avDir);
-        setMonsterId(monsterId);
+    public Monster(int monsterId, String name, float pow, float def, float sp, int awaren, String avDir, ArrayList<Chest> guardedChests) {
+	setName(name);
+	setPower(pow);
+	setDefence(def);
+	setSpeed(sp);
+	setAwareness(awaren);
+	setAvatarDir(avDir);
+	setMonsterId(monsterId);
+	setGuardedChests(guardedChests);
+    }
+
+    public Monster(String name, float pow, float def, float sp, int awaren, String avDir, ArrayList<Chest> guardedChests) {
+	setName(name);
+	setPower(pow);
+	setDefence(def);
+	setSpeed(sp);
+	setAwareness(awaren);
+	setAvatarDir(avDir);
+	setGuardedChests(guardedChests);
     }
 
     public void setGuardedChests(ArrayList<Chest> chests) {
-        guardedChests = chests;
+	guardedChests = chests;
     }
 
     public List<Chest> getGuardedChests() {
-        return guardedChests;
+	return guardedChests;
     }
 
     public int getMonsterId() {
-        return monsterId;
+	return monsterId;
     }
 
     public void setMonsterId(int monsterId) {
-        this.monsterId = monsterId;
+	this.monsterId = monsterId;
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     public float getPower() {
-        return power;
+	return power;
     }
 
     public void setPower(float power) {
-        this.power = power;
+	this.power = power;
     }
 
     public float getDefence() {
-        return defence;
+	return defence;
     }
 
     public void setDefence(float defence) {
-        this.defence = defence;
+	this.defence = defence;
     }
 
     public float getSpeed() {
-        return speed;
+	return speed;
     }
 
     public void setSpeed(float speed) {
-        this.speed = speed;
+	this.speed = speed;
     }
 
     public int getAwareness() {
-        return awareness;
+	return awareness;
     }
 
     public void setAwareness(int awareness) {
-        this.awareness = awareness;
+	this.awareness = awareness;
     }
 
     public String getAvatarDir() {
-        return avatarDir;
+	return avatarDir;
     }
 
     public void setAvatarDir(String avatarDir) {
-        this.avatarDir = avatarDir;
+	this.avatarDir = avatarDir;
     }
 
 }

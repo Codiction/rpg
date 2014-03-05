@@ -54,7 +54,6 @@ public class ChestMapper extends Mapper {
 		chests.add(new Chest(id, goldAmount, monsterList));
 	    }
 	} catch (SQLException ex) {
-	    ex.printStackTrace();
 	    return null;
 	} finally {
 	    super.closeConnection();
@@ -69,12 +68,17 @@ public class ChestMapper extends Mapper {
 	    this.updateChest(chest);
 	} else {
 	    String queryInsertChest = "INSERT INTO treasure (goldAmount) VALUES (?)";
-	    String queryLinkChestToMonster = "INSERT INTO guardedchest (?, ?)";
+	    String queryLinkChestToMonster = "INSERT INTO guardedchest VALUES (?, ?)";
 	    PreparedStatement insertChest = prepareStatement(queryInsertChest, Statement.RETURN_GENERATED_KEYS);
 	    PreparedStatement linkChestToMonster = super.prepareStatement(queryLinkChestToMonster);
 	    try {
 		insertChest.setInt(1, chest.getGoldAmount());
-		int id = insertChest.executeUpdate();
+		insertChest.executeUpdate();
+		int id = 0;
+		ResultSet keys = insertChest.getGeneratedKeys();
+		if(keys.next()){
+		    id = keys.getInt(1);
+		}
 		linkChestToMonster.setInt(2, id);
 		for (Monster m : chest.getGuardingMonsters()) {
 		    linkChestToMonster.setInt(1, m.getMonsterId());
@@ -118,7 +122,6 @@ public class ChestMapper extends Mapper {
 
 		return true;
 	    } catch (SQLException ex) {
-		return false;
 	    }
 	}
 
@@ -135,7 +138,6 @@ public class ChestMapper extends Mapper {
 		statement.executeUpdate();
 		return true;
 	    } catch (SQLException ex) {
-		ex.printStackTrace();
 	    } finally {
 		super.closeConnection();
 	    }
@@ -151,7 +153,6 @@ public class ChestMapper extends Mapper {
 	    statement.setInt(1, chest.getTreasureId());
 	    return statement.executeQuery().next();
 	} catch (SQLException ex) {
-	    ex.printStackTrace();
 	}
 	// Does not open or close connection! Because exists() is most of the
 	// time called in another method of the Mapper-class, this means that it
@@ -163,7 +164,6 @@ public class ChestMapper extends Mapper {
 
     public Chest loadChest(int id) throws SQLException {
 	String queryGetChest = "SELECT goldAmount FROM treasure WHERE treasureId = ?";
-	String queryGetMonstersLinkedToTreasure = "SELECT monsterId FROM guardedchest WHERE treasureId = ?";
 
 	super.openConnection();
 	PreparedStatement getChest = super.prepareStatement(queryGetChest);
@@ -180,7 +180,6 @@ public class ChestMapper extends Mapper {
 		return null;
 	    }
 	} catch (SQLException ex) {
-	    ex.printStackTrace();
 	}
 
 	return null;
