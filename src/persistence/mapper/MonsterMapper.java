@@ -65,11 +65,27 @@ public class MonsterMapper extends Mapper {
     }
 
     public boolean saveMonster(Monster monster) {
-	throw new UnsupportedOperationException();
+	super.openConnection();
+	if(exists(monster)){
+	    updateMonster(monster);
+	}else{
+	    // code voor INSERT
+	}
+	
+	super.closeConnection();
+	return false; // maak proper
     }
 
     public boolean updateMonster(Monster monster) {
-	throw new UnsupportedOperationException();
+	super.openConnection();
+	if(!exists(monster)){
+	    saveMonster(monster);
+	}else{
+	    // code voor UPDATE
+	}
+	
+	super.closeConnection();
+	return false; // maak proper
     }
 
     public boolean deleteMonster(Monster monster) {

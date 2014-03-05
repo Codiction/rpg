@@ -97,6 +97,7 @@ public class ChestMapper extends Mapper {
     }
 
     public boolean updateChest(Chest chest) {
+	super.openConnection();
 	if (!exists(chest)) {
 	    this.saveChest(chest);
 	} else {
@@ -104,17 +105,22 @@ public class ChestMapper extends Mapper {
 	    // Delete all rows with corresponding id in guardedchest and insert
 	    // monsters with corresponding id in guardedchest
 
-	    String queryInsertTreasure = "UPDATE treasure SET goldAmount = ? WHERE treasureId = ?; DELETE FROM guardedchest WHERE treasureId = ?;";
+	    String queryInsertTreasure = "UPDATE treasure SET goldAmount = ? WHERE treasureId = ?;";
+	    String queryDeleteGuardedTreasure = "DELETE FROM guardedchest WHERE treasureId = ?;";
 	    String queryLinkChestToMonster = "INSERT INTO guardedchest(?, ?)";
 	    PreparedStatement update = super.prepareStatement(queryInsertTreasure);
+	    PreparedStatement delete = super.prepareStatement(queryDeleteGuardedTreasure);
 	    try {
 		update.setInt(1, chest.getGoldAmount());
 		update.setInt(2, chest.getTreasureId());
-		update.setInt(3, chest.getTreasureId());
 		update.executeUpdate();
+		
+		delete.setInt(1, chest.getTreasureId());
+		delete.executeUpdate();
 
 		PreparedStatement insert = super.prepareStatement(queryLinkChestToMonster);
 		for (Monster m : chest.getGuardingMonsters()) {
+		    monsterMapper.saveMonster(m);
 		    insert.setInt(1, m.getMonsterId());
 		    insert.setInt(2, chest.getTreasureId());
 		    insert.executeUpdate();
@@ -122,6 +128,8 @@ public class ChestMapper extends Mapper {
 
 		return true;
 	    } catch (SQLException ex) {
+	    }finally{
+		super.closeConnection();
 	    }
 	}
 

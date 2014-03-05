@@ -1,7 +1,6 @@
 
 import domain.Chest;
 import domain.Monster;
-import java.util.ArrayList;
 import persistence.PersistenceController;
 
 /**
@@ -15,8 +14,9 @@ public class Main {
     }
 
     public Main() {
-	Chest c = new Chest(55, PersistenceController.getInstance().loadMonsters());
-	PersistenceController.getInstance().saveChest(c);
-	// TODO: Allow Chest and Monster constructor without the id-parameter (do not forget to automatically asign a primary key at saveMonster and saveChest!)
+	Chest c = PersistenceController.getInstance().loadChests().get(0);
+	c.setGoldAmount(9000);
+	PersistenceController.getInstance().updateChest(c);
+	// TODO: @ChestMapper.updateChest --> allow new Monsters to be put in guardingMonsters (saveMonster(m))
     }
 }
