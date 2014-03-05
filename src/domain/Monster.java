@@ -39,6 +39,16 @@ public class Monster {
 	setAvatarDir(avDir);
 	setGuardedChests(guardedChests);
     }
+    
+    public Monster(String name, int pow, int def, int sp, int awaren, String avDir) {
+	setName(name);
+	setPower(pow);
+	setDefence(def);
+	setSpeed(sp);
+	setAwareness(awaren);
+	setAvatarDir(avDir);
+	setGuardedChests(new ArrayList<Chest>());
+    }
 
     public void setGuardedChests(ArrayList<Chest> chests) {
 	guardedChests = chests;

@@ -52,7 +52,7 @@ public class MonsterMapper extends Mapper {
                 }
 
                 Monster m = new Monster(rs.getInt("monsterId"), rs.getString("name"), rs.getInt("power"),
-                        rs.getInt("defence"), rs.getInt("speed"), rs.getInt("awareness"), rs.getString("avatarDir"), null);
+                        rs.getInt("defence"), rs.getInt("speed"), rs.getInt("awareness"), rs.getString("avatarDir"), new ArrayList<Chest>());
                 m.setGuardedChests(guardedChests);
 
                 loadedMonsters.add(m);
@@ -124,7 +124,7 @@ public class MonsterMapper extends Mapper {
                     + "`speed` = ?, `awareness` = ?, `avatarDir` = ? WHERE "
                     + "`monsterId` = ?";
             String qryDeleteGuardedChest = "DELETE FROM guardedchest WHERE monsterId = ?";
-            String qryLinkMonsterToChest = "INSERT INTO guardedchest(?, ?)";
+            String qryLinkMonsterToChest = "INSERT INTO guardedchest VALUES (?, ?)";
             PreparedStatement update = prepareStatement(qryUpdateMonster);
             PreparedStatement delete = prepareStatement(qryDeleteGuardedChest);
             PreparedStatement insert = prepareStatement(qryLinkMonsterToChest);
@@ -152,7 +152,7 @@ public class MonsterMapper extends Mapper {
 
                 return true;
             } catch (SQLException se) {
-
+                se.printStackTrace();
             } finally {
                 super.closeConnection();
             }
@@ -206,7 +206,7 @@ public class MonsterMapper extends Mapper {
             Monster m = null;
             if (rs.next()) {
                 m = new Monster(rs.getInt("monsterId"), rs.getString("name"), rs.getInt("power"),
-                        rs.getInt("defence"), rs.getInt("speed"), rs.getInt("awareness"), rs.getString("avatarDir"), null);
+                        rs.getInt("defence"), rs.getInt("speed"), rs.getInt("awareness"), rs.getString("avatarDir"), new ArrayList<Chest>());
 
             }
             return m;
