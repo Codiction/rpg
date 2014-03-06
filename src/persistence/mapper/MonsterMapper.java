@@ -97,8 +97,11 @@ public class MonsterMapper extends Mapper {
                     id = keys.getInt(1);
                 }
 
+		monster.setMonsterId(id);
+		
                 link.setInt(1, id);
                 for (Chest c : monster.getGuardedChests()) {
+		    chestMapper.saveChest(c);
                     link.setInt(2, c.getTreasureId());
                     link.executeUpdate();
                 }

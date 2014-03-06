@@ -35,10 +35,6 @@ public class Chest {
 	this.monsters = monsters;
     }
 
-    public ArrayList<Monster> getMonsters() {
-	return monsters;
-    }
-
     public int getTreasureId() {
 	return treasureId;
     }
@@ -55,7 +51,7 @@ public class Chest {
 	this.goldAmount = goldAmount;
     }
 
-    public List<Monster> getGuardingMonsters() {
+    public ArrayList<Monster> getGuardingMonsters() {
 	return monsters;
     }
 }

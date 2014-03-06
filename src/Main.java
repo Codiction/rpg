@@ -1,4 +1,5 @@
 
+import domain.Chest;
 import domain.Monster;
 import java.util.ArrayList;
 import persistence.PersistenceController;
@@ -10,25 +11,22 @@ import persistence.PersistenceController;
 public class Main {
 
     public static void main(String[] args) {
-        new Main();
+	new Main();
     }
 
     public Main() {
 
-        ArrayList<Monster> monsters = PersistenceController.getInstance().loadMonsters();
-        
+	ArrayList<Chest> chests = PersistenceController.getInstance().loadChests();
 
-        for (Monster m : monsters) {
-            if (m.getName().equals("Lesser Demon")) {
-                PersistenceController.getInstance().link(m, PersistenceController.getInstance().loadChests().get(0));
-                
-                
-            }
-        }
+	for (Chest c : chests) {
+	    if(c.getGoldAmount() == 9000){
+		PersistenceController.getInstance().link(new Monster("Jens", 0, 2, -5, 5, "images/noobs/Jens.noob"), c);
+	    }
+	}
 
 //	Chest c = PersistenceController.getInstance().loadChests().get(0);
 //	c.setGoldAmount(9000);
 //	PersistenceController.getInstance().updateChest(c);
-        // TODO: @ChestMapper.updateChest --> allow new Monsters to be put in guardingMonsters (saveMonster(m))
+	// TODO: @ChestMapper.updateChest --> allow new Monsters to be put in guardingMonsters (saveMonster(m))
     }
 }
